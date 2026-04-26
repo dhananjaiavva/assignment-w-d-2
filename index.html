@@ -4,50 +4,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Smart Event Dashboard</title>
 </head>
+<style>
+    :root {
+        --primary-purple: #6c63ff;
+        --secondary-purple: #5a52d5;
+        --bg-gradient: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+        --card-bg: #ffffff;
+        --text-color: #333;
+        --label-color: #555;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-gradient);
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+        color: var(--text-color);
+    }
+
+    header h1 {
+        text-align: center;
+        color: white;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .top-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background: var(--card-bg);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: var(--primary-purple);
+        margin-top: 0;
+        font-size: 1.4rem;
+    }
+
+    form label {
+        display: block;
+        font-weight: bold;
+        margin: 15px 0 5px;
+        font-size: 0.9rem;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-sizing: border-box;
+    }
+
+    .btn-1,
+    .btn-2 {
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+        transition: opacity 0.2s;
+    }
+
+    .btn-2 {
+        background-color: #8e80d8;
+    }
+
+    .btn-1 {
+        background-color: var(--primary-purple);
+    }
+
+    .btn-1:hover,
+    .btn-2:hover {
+        opacity: 0.9;
+    }
+
+    .my-events {
+        flex: 1.5;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .btn-grp {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-grp button {
+        flex: 1;
+        justify-content: center;
+        font-size: 0.8rem;
+    }
+
+    .event-placeholder {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #999;
+        border: 2px dashed #eee;
+        border-radius: 10px;
+    }
+
+    .dom-demo {
+        margin-top: 20px;
+    }
+
+    .demo-box {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #eee;
+    }
+
+    .demo-box h3 {
+        margin-top: 0;
+        font-size: 1.1rem;
+    }
+
+    .status {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .highlight {
+        color: var(--primary-purple);
+        font-weight: bold;
+    }
+</style>
 
 <body>
-    <script src="script.js"></script>
-    <div class="container">
+
+    <header>
         <h1>🎯 Smart Event Dashboard</h1>
-        <h1>🎯 Smart Event Dashboard </h1>
-        <div class="dashboard">
-            <div class="form-section">
+    </header>
+
+    <main class="container">
+        <div class="top-row">
+            <section class="card add-event">
                 <h2>Add New Event</h2>
                 <form id="eventForm">
-                    <div class="form-group"> <label for="eventTitle">Event Title:</label> <input type="text"
-                            id="eventTitle" required> </div>
-                    <div class="form-group"> <label for="eventDate">Event Date:</label> <input type="date"
-                            id="eventDate" required> </div>
-                    <div class="form-group"> <label for="eventCategory">Category:</label> <select id="eventCategory"
-                            required>
-                            <option value="Conference">Conference</option>
-                            <option value="Workshop">Workshop</option>
-                            <option value="Meetup">Meetup</option>
-                            <option value="Webinar">Webinar</option>
-                            <option value="Social">Social</option>
-                        </select> </div>
-                    <div class="form-group"> <label for="eventDescription">Description:</label> <textarea
-                            id="eventDescription" required></textarea> </div> <button type="submit">Add Event</button>
+                    <label>Event Title:</label>
+                    <input type="text" placeholder="Enter title">
+
+                    <label>Event Date:</label>
+                    <input type="date">
+
+                    <label>Category:</label>
+                    <select>
+                        <option value=" " disabled selected>Select Event</option>
+                        <option>Conference</option>
+                        <option>Workshop</option>
+                        <option>Meetup</option>
+                    </select>
+
+                    <label>Description:</label>
+                    <textarea rows="4"></textarea>
+
+                    <button type="submit" class="btn-1">Add Event</button>
                 </form>
-            </div>
-            <div class="events-section">
-                <h2>My Events</h2>
-                <div class="controls"> <button id="clearAllBtn">Clear All Events</button> <button id="addSampleBtn">Add
-                        Sample Events</button> </div>
-                <div id="eventContainer">
-                    <div class="empty-state">No events yet. Add your first event!</div>
+            </section>
+
+            <section class="card my-events">
+                <div class="card-header">
+                    <h2>My Events</h2>
+                    <div class="btn-grp">
+                        <button class="btn-2">Clear All Events</button>
+                        <button class="btn-1">Add Sample Events</button>
+                    </div>
                 </div>
-            </div>
+                <div class="event-placeholder">
+                    <p>No events yet. Add your first event!</p>
+                </div>
+            </section>
         </div>
-        <div class="demo-section">
+
+        <section class="card">
             <h2>DOM Manipulation Demo</h2>
             <div class="demo-box">
-                <div id="demoContent" class="demo-content"> Press any key to see the difference! </div>
+                <div class="demo-box">
+ 
+                    <p class="status">You pressed: <span class="highlight">None</span></p>
+                </div>
             </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
+        </section>
+    </main>
+
+    <script>
+
+        // 1. Updated Selectors to match your new CSS classes
+        const eventForm = document.getElementById('eventForm');
+        const eventListContainer = document.querySelector('.event-placeholder');
+        const clearBtn = document.querySelector('.btn-2'); // Changed from .btn-secondary
+        const sampleBtn = document.querySelector('.btn-grp .btn-1'); // Changed to target the specific button
+        const keyDisplay = document.querySelector('.highlight');
+
+        // --- 1. Event Handling: Add New Event ---
+        eventForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = eventForm.querySelector('input[type="text"]').value;
+            const date = eventForm.querySelector('input[type="date"]').value;
+            const category = eventForm.querySelector('select').value;
+
+            if (!title || !date || category === " ") {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            addEventToUI(title, date, category);
+            eventForm.reset();
+        });
+
+        // --- 2. DOM Manipulation: Render Event Card ---
+        function addEventToUI(title, date, category) {
+            if (eventListContainer.querySelector('p')) {
+                eventListContainer.innerHTML = '';
+                eventListContainer.style.flexDirection = 'column';
+                eventListContainer.style.justifyContent = 'flex-start';
+                eventListContainer.style.border = 'none';
+            }
+
+            const eventCard = document.createElement('div');
+            eventCard.style.width = '100%';
+            eventCard.style.padding = '10px';
+            eventCard.style.marginBottom = '10px';
+            eventCard.style.borderBottom = '1px solid #eee';
+            eventCard.style.color = '#333'; // Ensure visibility
+
+            eventCard.innerHTML = `
+            <strong>${title}</strong>
+            <span style="font-size: 0.8rem; color: #666;">(${category})</span>
+            <br>
+                <small>${date}</small>
+        `;
+
+            eventListContainer.appendChild(eventCard);
+        }
+
+        // --- 3. Utility: Clear and Sample Data ---
+        clearBtn.addEventListener('click', () => {
+            eventListContainer.innerHTML = '<p>No events yet. Add your first event!</p>';
+            eventListContainer.style.border = '2px dashed #eee';
+            eventListContainer.style.justifyContent = 'center';
+        });
+
+        sampleBtn.addEventListener('click', () => {
+            addEventToUI("Web Dev Workshop", "2024-12-01", "Workshop");
+            addEventToUI("AI Networking", "2024-12-15", "Meetup");
+        });
+
+        // --- 4. Keyboard Demo ---
+        document.addEventListener('keydown', (e) => {
+            if (keyDisplay) keyDisplay.textContent = e.key;
+        });
+
+    </script>
+
 </body>
+
+</html>
